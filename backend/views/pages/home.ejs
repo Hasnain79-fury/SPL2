@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSBangla - Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-8">Welcome to CSBangla!</h1>
+    
+    <!-- Navigation Menu -->
+    <nav class="flex justify-center space-x-4 mb-8">
+      <% if (user) { %>
+        <a href="/blogs/show" class="text-blue-500 font-medium hover:underline">View Blogs</a>
+        <a href="/blogs/create" class="text-blue-500 font-medium hover:underline">Create Blog</a>
+        <a href="/auth/logout" class="text-red-500 font-medium hover:underline">Logout</a>
+      <% } else { %>
+        <a href="/auth/login" class="text-blue-500 font-medium hover:underline">Login</a>
+        <a href="/auth/signup" class="text-blue-500 font-medium hover:underline">Signup</a>
+        <a href="/blogs/show" class="text-blue-500 font-medium hover:underline">View Blogs</a>
+      <% } %>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="text-center">
+      <% if (user) { %>
+        <p class="text-lg">Hello, <%= user.username %>! Welcome back to CSBangla</p>
+        <p class="text-gray-600">You can create new blogs or explore existing ones!</p>
+      <% } else { %>
+        <p class="text-lg">Join CSBangla today to share your thoughts and explore great content.</p>
+        <p class="text-gray-600">Login or signup to get started!</p>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>

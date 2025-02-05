@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --w3-green: #04AA6D;
+  --w3-black: #282A35;
+  --w3-dark-grey: #3a3a3a;
+  --sidebar-width: 220px;
+  --font-bangla: 'Hind Siliguri', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-family: var(--font-bangla);
+
+}
+
+.w3-sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--w3-black);
+  color: white;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+}
+
+.main-content {
+  margin-left: var(--sidebar-width);
+}
+
+.w3-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.w3-btn-green {
+  background-color: var(--w3-green);
+  color: white;
+}
+
+.w3-btn-green:hover {
+  background-color: #059862;
+}
+
+.tutorial-container {
+  padding: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.example-box {
+  background-color: #E7E9EB;
+  border-radius: 4px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.code-box {
+  background-color: #fff;
+  border-left: 4px solid var(--w3-green);
+  padding: 16px;
+}

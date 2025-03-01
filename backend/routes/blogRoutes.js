@@ -1,5 +1,5 @@
 const express = require('express');
-const { showCreateBlogForm, createBlog, getAllBlogs, getBlogById } = require('../controllers/blogController');
+const { showCreateBlogForm, createBlog, getAllBlogs, getBlogById,searchBlogsByTitle } = require('../controllers/blogController');
 const authMiddleware = require('../middlewares/authMiddleware');
 const commentRoutes = require('./commentRoutes');
 
@@ -12,7 +12,10 @@ router.get('/create', authMiddleware, showCreateBlogForm);
 router.post('/', authMiddleware, createBlog);
 
 // Route to display all blog posts
-router.get('/show', getAllBlogs);
+router.get('/show', getAllBlogs);// Add this route before the route to fetch a specific blog by ID
+router.get('/search', searchBlogsByTitle);
+
+
 
 // Route to fetch a specific blog by ID
 router.get('/:id', getBlogById);

@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-server",
+      "appliesTo": "backend/server.js",
+      "type": "launch"
+    }
+  ]
+}

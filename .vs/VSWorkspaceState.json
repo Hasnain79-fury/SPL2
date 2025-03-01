@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\backend",
+    "\\backend\\views",
+    "\\backend\\views\\pages"
+  ],
+  "SelectedNode": "\\backend\\views\\pages\\login.ejs",
+  "PreviewInSolutionExplorer": false
+}

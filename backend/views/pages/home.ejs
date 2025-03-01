@@ -16,6 +16,7 @@
         <a href="/blogs/show" class="text-blue-500 font-medium hover:underline">View Blogs</a>
         <a href="/blogs/create" class="text-blue-500 font-medium hover:underline">Create Blog</a>
         <a href="/auth/logout" class="text-red-500 font-medium hover:underline">Logout</a>
+		<a href="/user/profile/<%= user.userId %>" class="text-blue-500 font-medium hover:underline">Profile</a>
       <% } else { %>
         <a href="/auth/login" class="text-blue-500 font-medium hover:underline">Login</a>
         <a href="/auth/signup" class="text-blue-500 font-medium hover:underline">Signup</a>

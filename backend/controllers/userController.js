@@ -4,7 +4,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');  // Use for sending emails
-
+const mongoose = require('mongoose');
+const FavoriteList = require('../models/FavoriteList');
 
 // Signup Handler
 exports.signup = async (req, res) => {
@@ -151,5 +152,28 @@ exports.resetPassword = async (req, res) => {
   } catch (error) {
     console.error('Error resetting password:', error);
     res.status(500).send('Server error.');
+  }
+};
+
+exports.getUserProfile = async (req, res) => {
+  const { id } = req.params;
+
+   if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send('Invalid user ID format');
+  }
+
+
+  try {
+    const user = await RegisteredUser.findById(id)
+      .populate('favoriteList');
+
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    res.render('pages/user-profile', { user });
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).send('Server error while fetching user profile.');
   }
 };

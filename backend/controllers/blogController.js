@@ -83,3 +83,22 @@ exports.getBlogById = async (req, res) => {
     res.status(500).send('Server error while fetching blog details.');
   }
 };
+
+// Search blogs by title
+exports.searchBlogsByTitle = async (req, res) => {
+  const { title } = req.query;
+
+  try {
+    const blogs = await Blog.find({ title: new RegExp(title, 'i') })
+      .populate('author', '_id username')
+      .populate({
+        path: 'comments',
+        populate: { path: 'author', select: '_id username' },
+      });
+
+    res.render('pages/blogs', { blogs });
+  } catch (error) {
+    console.error('Error searching blogs:', error);
+    res.status(500).send('Server error while searching blogs.');
+  }
+};

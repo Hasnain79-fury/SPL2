@@ -102,3 +102,24 @@ exports.searchBlogsByTitle = async (req, res) => {
     res.status(500).send('Server error while searching blogs.');
   }
 };
+
+// Add a new method to update the rating point
+// Add a new method to update the rating point
+exports.updateRating = async (req, res) => {
+  try {
+    console.log('Request body:', req.body); // Add this line to log the request body
+    const { blogId, rating } = req.body;
+
+    const blog = await Blog.findById(blogId); // Find by ObjectId
+    if (!blog) {
+      return res.status(404).json({ message: 'Blog not found' });
+    }
+    blog.rating_point = rating;
+    await blog.save();
+    console.log('Rating updated successfully:', blog); // Add this line to log the updated blog
+    res.status(200).json({ message: 'Rating updated successfully', blog });
+  } catch (error) {
+    console.error('Error updating rating:', error); // Add this line to log any errors
+    res.status(500).json({ message: 'Server error', error });
+  }
+};

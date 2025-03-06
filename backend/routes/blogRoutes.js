@@ -1,5 +1,5 @@
 const express = require('express');
-const { showCreateBlogForm, createBlog, getAllBlogs, getBlogById,searchBlogsByTitle } = require('../controllers/blogController');
+const { showCreateBlogForm, createBlog, getAllBlogs, getBlogById,searchBlogsByTitle, updateRating } = require('../controllers/blogController');
 const authMiddleware = require('../middlewares/authMiddleware');
 const commentRoutes = require('./commentRoutes');
 
@@ -19,6 +19,13 @@ router.get('/search', searchBlogsByTitle);
 
 // Route to fetch a specific blog by ID
 router.get('/:id', getBlogById);
+
+
+// Add a new route to handle rating updates
+
+// Add a new route to handle rating updates
+router.post('/update-rating', authMiddleware, updateRating);
+
 
 // Mount comment routes for a specific blog
 router.post('/:id/comments', commentRoutes);

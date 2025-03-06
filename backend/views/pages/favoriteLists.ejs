@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Lists</title>
+</head>
+<body>
+    <h1>Your Favorite Lists</h1>
+    <% if (favoriteLists.length > 0) { %>
+        <% favoriteLists.forEach(favList => { %>
+            <div>
+                <h2><%= favList.fav_list_name %></h2>
+                <ul>
+                    <% favList.blogs.forEach(blog => { %>
+                        <li><%= blog.title %></li>
+                    <% }) %>
+                </ul>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p>You have no favorite lists.</p>
+    <% } %>
+</body>
+</html>

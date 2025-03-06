@@ -5,9 +5,10 @@
     "\\middlewares",
     "\\models",
     "\\routes",
+    "\\test",
     "\\views",
     "\\views\\pages"
   ],
-  "SelectedNode": "\\controllers\\userController.js",
+  "SelectedNode": "\\views\\pages\\home.ejs",
   "PreviewInSolutionExplorer": false
 }

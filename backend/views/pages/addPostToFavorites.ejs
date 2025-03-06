@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Post to Favorite List</title>
+</head>
+<body>
+    <h1>Add Post to Favorite List</h1>
+    <form action="/favorites/addPostToFavorites" method="POST">
+        <label for="favListId">Favorite List:</label>
+        <select name="favListId" id="favListId">
+            <% favoriteLists.forEach(favList => { %>
+                <option value="<%= favList._id %>"><%= favList.fav_list_name %></option>
+            <% }) %>
+        </select>
+        <label for="postId">Post ID:</label>
+        <input type="text" name="postId" id="postId" required>
+        <input type="text" name="userId" value="<%= userId %>">
+        <button type="submit">Add to Favorites</button>
+    </form>
+</body>
+</html>

@@ -21,5 +21,12 @@
     <% } else { %>
         <p>You have no favorite lists.</p>
     <% } %>
+
+  <form action="/favorites/createFavoriteList" method="POST">
+  <input type="hidden" name="userId" value="<%= user._id %>">
+  <input type="text" name="favListName" placeholder="Favorite List Name" required>
+  <button type="submit">Create Favorite List</button>
+  </form>
+
 </body>
 </html>

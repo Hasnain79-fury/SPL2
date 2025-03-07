@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Favorite List</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-8">Select Favorite List</h1>
+    <form action="/favorites/addBlogToFavoriteList" method="POST" class="bg-white p-6 rounded shadow-md">
+      <input type="hidden" name="blogId" value="<%= blogId %>">
+      <div class="mb-4">
+        <label for="favListId" class="block text-gray-700 font-bold mb-2">Choose a Favorite List:</label>
+        <select name="favListId" id="favListId" class="block w-full border border-gray-300 rounded p-2" required>
+          <% favoriteLists.forEach(favList => { %>
+            <option value="<%= favList._id %>"><%= favList.fav_list_name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Add to Favorite List</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -5,9 +5,11 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/database');  // Database connection module
 const authRoutes = require('./routes/authRoutes');
 const viewRoutes = require('./routes/viewRoutes');
+const ratingsRouter = require('./routes/ratings');
 const userRoutes = require('./routes/userRoutes'); // Add this line
 const favoriteListRoutes = require('./routes/favoriteListRoutes'); // Add this line
 const blogRoutes = require('./routes/blogRoutes');  
+const forumRoutes = require('./routes/forumRoutes'); // Add this line
 const authMiddleware = require('./middlewares/authMiddleware');  // Middleware for checking user authentication
 
 // Load environment variables
@@ -38,6 +40,8 @@ app.use('/auth', authRoutes);  // Authentication routes
 app.use('/blogs', blogRoutes);  // Register blog routes with /blogs prefix
 app.use('/user', userRoutes); // Add this line
 app.use('/favorites', favoriteListRoutes); // Add this line
+app.use('/ratings', ratingsRouter);
+app.use('/', forumRoutes); // Add this line
 
 // Start the server
 const PORT = process.env.PORT || 5000;

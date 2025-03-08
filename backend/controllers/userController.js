@@ -1,5 +1,6 @@
 // controllers/userController.js
 const RegisteredUser = require('../models/RegisteredUser');
+const Blog = require('../models/Blog');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
@@ -164,14 +165,21 @@ exports.getUserProfile = async (req, res) => {
 
 
   try {
-    const user = await RegisteredUser.findById(id)
-      .populate('favoriteList');
+   
+   console.log('Request Params:', req.params); 
+       const userId = req.params.id; // Correctly retrieve userId from req.params.id
+       console.log('User ID:', userId); // Debugging line to check userId
+   
+       // Find the user by the default _id field
+       const user = await RegisteredUser.findById(userId);
+       if (!user) {
+         return res.status(404).json({ error: 'User not found' });
+       }
+   
+       // Find favorite lists by the user's ObjectId
+       const favoriteLists = await FavoriteList.find({ user: user._id }).populate('blogs');
 
-    if (!user) {
-      return res.status(404).send('User not found');
-    }
-
-    res.render('pages/user-profile', { user });
+    res.render('pages/user-profile', { favoriteLists, user });
   } catch (error) {
     console.error('Error fetching user profile:', error);
     res.status(500).send('Server error while fetching user profile.');

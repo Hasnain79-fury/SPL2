@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forum Post Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold text-center mb-8"><%= forumPost.title %></h1>
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <p class="text-gray-700 text-base mb-4"><%= forumPost.content %></p>
+      <div class="text-sm text-gray-500 mb-2">
+        <strong>Author:</strong> <%= forumPost.author.username %>
+      </div>
+      <div class="text-sm text-gray-500 mb-2">
+        <strong>Posted on:</strong> <%= forumPost.createdAt.toDateString() %>
+      </div>
+      <div class="mt-4">
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">Comments:</h3>
+        <% if (forumPost.comments && forumPost.comments.length > 0) { %>
+          <% forumPost.comments.forEach(comment => { %>
+            <div class="border-b border-gray-200 pb-2 mb-2">
+              <p class="text-sm text-gray-600"><%= comment.text %></p>
+              <p class="text-xs text-gray-400">Posted on <%= comment.createdAt.toDateString() %></p>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p class="text-gray-500">No comments yet. Be the first to comment!</p>
+        <% } %>
+      </div>
+      <div class="mt-4">
+        <form action="/forums/<%= forumPost._id %>/comments" method="POST">
+          <textarea name="text" rows="3" class="w-full border border-gray-300 rounded-lg p-2 mb-2" placeholder="Write your comment..." required></textarea>
+          <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit Comment</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

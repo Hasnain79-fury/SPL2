@@ -10,4 +10,11 @@ const blogSchema = new mongoose.Schema({
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'RegisteredUser' }
 }, { timestamps: true });
 
+// Method to update the rating
+blogSchema.methods.updateRating = function(newRating) {
+  
+  this.rating_point =(  newRating);
+  return this.save();
+};
+
 module.exports = mongoose.model('Blog', blogSchema);

@@ -17,8 +17,9 @@
         <a href="/blogs/create" class="text-blue-500 font-medium hover:underline">Create Blog</a>
         <a href="/auth/logout" class="text-red-500 font-medium hover:underline">Logout</a>
 		<a href="/user/profile/<%= user.userId %>" class="text-blue-500 font-medium hover:underline">Profile</a>
-		<a href="/favorites/addPostToFavorites/<%= user.userId %>" class="text-blue-500 font-medium hover:underline">Add to Favorites</a>
 		<a href="/favorites/favoriteLists/<%= user.userId %>" class="text-blue-500 font-medium hover:underline">Favorite Lists</a>
+    <a href="/forums" class="inline-block bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">View Forums</a>
+      <a href="/forums/create" class="inline-block bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">Create Forum Post</a>
       <% } else { %>
         <a href="/auth/login" class="text-blue-500 font-medium hover:underline">Login</a>
         <a href="/auth/signup" class="text-blue-500 font-medium hover:underline">Signup</a>

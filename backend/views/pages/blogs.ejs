@@ -93,19 +93,19 @@
 						</div>
 
 						<!-- Rating Section -->
-						<div class="mt-4">
-							<strong>Rating:</strong>
-							<p class="text-gray-700 text-base mb-4">
-								<%= blog.rating_point %> / 5
-							</p>
-							<form action="update-rating" method="POST">
-								<input type="hidden" name="blogId" value=""<%= blog._id %>">
-								<label for="rating">Rate this blog:</label>
-								<input type="number" name="rating" min="0" max="5" required="" class="border border-gray-300 rounded-lg p-2 mb-2">
-									<button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit Rating</button>
-								</form>
-						</div>
-
+						<!-- Rating Section -->
+<div class="mt-4">
+	<strong>Rating:</strong>
+	<p class="text-gray-700 text-base mb-4">
+	  <%= blog.rating_point %> / 5
+	</p>
+	<form action="/blogs/<%= blog._id %>/update-rating" method="POST">
+	  <input type="hidden" name="blogId" value="<%= blog._id %>">
+	  <label for="rating">Rate this blog:</label>
+	  <input type="number" name="rating" min="0" max="5" required class="border border-gray-300 rounded-lg p-2 mb-2">
+	  <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit Rating</button>
+	</form>
+  </div>
 						<!-- Add a Comment -->
 						<div class="mt-4">
 							<form action="/blogs/"

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Forum</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold text-center mb-8">Community Forum</h1>
+    <div class="text-center mb-8">
+      <a href="/forums/create" class="inline-block bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">Create a New Post</a>
+    </div>
+    <% if (forumPosts && forumPosts.length > 0) { %>
+      <% forumPosts.forEach(post => { %>
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-2"><%= post.title %></h2>
+          <p class="text-gray-700 text-base mb-4"><%= post.content %></p>
+          <div class="text-sm text-gray-500 mb-2">
+            <strong>Author:</strong> <%= post.author.username %>
+          </div>
+          <div class="text-sm text-gray-500 mb-2">
+            <strong>Posted on:</strong> <%= post.createdAt.toDateString() %>
+          </div>
+          <a href="/forums/<%= post._id %>" class="text-blue-500 hover:underline">Read more</a>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p class="text-center text-gray-500">No forum posts available.</p>
+    <% } %>
+  </div>
+</body>
+</html>

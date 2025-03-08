@@ -1,4 +1,5 @@
 const Forum = require('../models/Forum');
+const Comment = require('../models/Comment');
 
 // Show the form to create a new forum post
 exports.showCreateForumForm = (req, res) => {
@@ -57,6 +58,38 @@ exports.getPostById = async (req, res) => {
     res.status(500).send('Server error while fetching forum post.');
   }
 };
+//add comment to a forum post
+exports.addComment = async (req, res) => {
+    const { id } = req.params;
+    const { text } = req.body;
+    const authorId = req.user?.userId || req.user?._id; // Get the author ID from req.user
+  
+    if (!authorId) {
+      return res.status(403).send('You must be logged in to comment.');
+    }
+  
+    try {
+      const forumPost = await Forum.findById(id);
+      if (!forumPost) {
+        return res.status(404).send('Post not found');
+      }
+  
+      const newComment = new Comment({
+        text,
+        author: authorId,
+        forum: id
+      });
+  
+      await newComment.save();
+      forumPost.comments.push(newComment._id);
+      await forumPost.save();
+  
+      res.redirect(`/forums/${id}`);
+    } catch (error) {
+      console.error('Error adding comment:', error);
+      res.status(500).send('Server error while adding comment.');
+    }
+  };
 
 // Update a forum post
 exports.updatePost = async (req, res) => {

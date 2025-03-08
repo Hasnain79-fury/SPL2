@@ -35,8 +35,10 @@ exports.createPost = async (req, res) => {
 // Get all forum posts
 exports.getAllPosts = async (req, res) => {
   try {
+    const user = req.user || null; // Optional: Pass user info if logged in
+
     const forumPosts = await Forum.find().populate('author').populate('comments');
-    res.render('pages/forums', { forumPosts });
+    res.render('pages/forums', { forumPosts ,user});
   } catch (error) {
     console.error('Error fetching forum posts:', error);
     res.status(500).send('Server error while fetching forum posts.');

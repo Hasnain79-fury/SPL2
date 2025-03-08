@@ -1,132 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<title>All Blogs</title>
-				<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSBangla - Blogs</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .background-image {
+      background-image: url('/images/pexels-pixabay-220182.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  </style>
 </head>
-	<body class="bg-gray-100 text-gray-800">
-		<div class="container mx-auto p-6">
-			<h1 class="text-3xl font-bold text-center mb-8">All Blog Posts</h1>
+<body class="bg-gray-100 text-gray-800">
+  <!-- Header -->
+  <header class="bg-white shadow">
+    <div class="container mx-auto p-6 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <img src="/images/log.jpg" alt="CSBangla Logo" class="h-10">
+        <div class="text-2xl font-bold">
+          <a href="/">CSBangla</a>
+        </div>
+      </div>
+      <div class="flex items-center space-x-4">
+        <form action="/blogs/search" method="GET" class="flex">
+          <input type="text" name="query" placeholder="Search..." class="border border-gray-300 rounded-l-lg p-2">
+          <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600">Search</button>
+        </form>
+        <nav class="space-x-4">
+          <% if (user) { %>
+            <a href="/blogs/show" class="text-gray-700 hover:text-blue-500">View Blogs</a>
+            <a href="/blogs/create" class="text-gray-700 hover:text-blue-500">Create Blog</a>
+            <a href="/auth/logout" class="text-red-500 hover:text-red-700">Logout</a>
+            <a href="/user/profile/<%= user.userId %>" class="text-gray-700 hover:text-blue-500">Profile</a>
+            <a href="/favorites/favoriteLists/<%= user.userId %>" class="text-gray-700 hover:text-blue-500">Favorite Lists</a>
+            <a href="/forums" class="text-gray-700 hover:text-blue-500">View Forums</a>
+            <a href="/forums/create" class="text-gray-700 hover:text-blue-500">Create Forum Post</a>
+          <% } else { %>
+            <a href="/auth/login" class="text-gray-700 hover:text-blue-500">Login</a>
+            <a href="/auth/signup" class="text-gray-700 hover:text-blue-500">Signup</a>
+            <a href="/blogs/show" class="text-gray-700 hover:text-blue-500">View Blogs</a>
+          <% } %>
+        </nav>
+      </div>
+    </div>
+  </header>
 
-			<div class="flex">
-				<!-- Sidebar -->
-				<div class="w-1/4 bg-white rounded-lg shadow-md p-6 mr-6">
-					<h2 class="text-xl font-semibold text-gray-900 mb-4">Categories</h2>
-					<ul>
-						<% const uniqueTags = [...new Set(blogs.flatMap(blog => blog.tags))]; %>
-						<% uniqueTags.forEach(tag => { %>
-						<li class="mb-2">
-							<a href="/blogs?tag="
-								<%= tag %>" class="text-blue-500 hover:underline"><%= tag %>
-							</a>
-						</li>
-						<% }) %>
-					</ul>
-				</div>
+  <!-- Main Content -->
+  <main class="container mx-auto p-6 text-center background-image">
+    <div class="bg-white bg-opacity-75 p-6 rounded-lg shadow-lg">
+      <h1 class="text-4xl font-bold text-blue-600 mb-8">All Blog Posts</h1>
+      <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-1/4 bg-white rounded-lg shadow-md p-6 mr-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Categories</h2>
+          <ul>
+            <% const uniqueTags = [...new Set(blogs.flatMap(blog => blog.tags))]; %>
+            <% uniqueTags.forEach(tag => { %>
+              <li class="mb-2">
+                <a href="/blogs?tag=<%= tag %>" class="text-blue-500 hover:underline"><%= tag %></a>
+              </li>
+            <% }) %>
+          </ul>
+        </div>
 
-				<!-- Main Content -->
-				<div class="w-3/4">
-					<!-- Search Form -->
-					<form action="/blogs/search" method="GET" class="mb-8">
-						<input type="text" name="title" placeholder="Search by title" class="border border-gray-300 rounded-lg p-2 w-full mb-4" required="">
-							<button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Search</button>
-						</form>
+        <!-- Blog Posts -->
+        <div class="w-3/4">
+          <!-- Search Form -->
+          <form action="/blogs/search" method="GET" class="mb-8">
+            <input type="text" name="title" placeholder="Search by title" class="border border-gray-300 rounded-lg p-2 w-full mb-4" required>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Search</button>
+          </form>
 
-					<% if (blogs && blogs.length > 0) { %>
-					<% blogs.forEach(blog => { %>
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-						<!-- Blog Details -->
-						<h2 class="text-2xl font-semibold text-gray-900 mb-2">
-							<%= blog.title %>
-						</h2>
-						<p class="text-gray-700 text-base mb-4">
-							<%= blog.blog_text %>
-						</p>
-				<h3><%=blog._id%></h3>
-						 <a href="/favorites/selectFavoriteList?blogId=<%= blog._id %>" class="text-blue-500 font-medium hover:underline">Add to Favorite List</a>
+          <% if (blogs && blogs.length > 0) { %>
+            <% blogs.forEach(blog => { %>
+              <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-2"><%= blog.title %></h2>
+                <p class="text-gray-700 text-base mb-4"><%= blog.blog_text %></p>
+                <div class="text-sm text-gray-500 mb-2">
+                  <strong>Author:</strong> <%= blog.author ? blog.author.username : 'Unknown' %>
+                </div>
+                <div class="text-sm text-gray-500 mb-2">
+                  <strong>Posted on:</strong> <%= blog.createdAt.toDateString() %>
+                </div>
+                <div class="blog-tags">
+                  <strong>Tags:</strong>
+                  <div class="flex flex-wrap mt-2">
+                    <% blog.tags.forEach(tag => { %>
+                      <span class="bg-blue-500 text-white text-xs font-medium rounded-full px-3 py-1 mr-2 mb-2"><%= tag %></span>
+                    <% }) %>
+                  </div>
+                </div>
+                <a href="/blogs/<%= blog._id %>" class="text-blue-500 hover:underline">Read more</a>
+                <a href="/favorites/selectFavoriteList?blogId=<%= blog._id %>" class="text-blue-500 font-medium hover:underline">Add to Favorite List</a>
 
-						<div class="text-sm text-gray-500 mb-2">
-							<strong>Author:</strong>
-							<% if (blog.author && blog.author.username) { %>
-							<p>
-								<%= blog.author.username %>
-							</p>
-							<% } else { %>
-                  <p>Unknown</p>
-							<% } %>
-						</div>
+                <!-- Comment Section -->
+                <div class="mt-6">
+                  <h3 class="text-lg font-semibold text-gray-800 mb-2">Comments:</h3>
+                  <% if (blog.comments && blog.comments.length > 0) { %>
+                    <% blog.comments.forEach(comment => { %>
+                      <div class="border-b border-gray-200 pb-2 mb-2">
+                        <p class="text-sm text-gray-600"><%= comment.text %></p>
+                        <p class="text-xs text-gray-400">Posted on <%= comment.createdAt.toDateString() %></p>
+                      </div>
+                    <% }) %>
+                  <% } else { %>
+                    <p class="text-gray-500">No comments yet. Be the first to comment!</p>
+                  <% } %>
+                </div>
 
-						<div class="text-sm text-gray-500 mb-2">
-							<strong>Posted on:</strong> <%= blog.createdAt.toDateString() %>
-						</div>
+                <!-- Rating Section -->
+                <div class="mt-4">
+                  <strong>Rating:</strong>
+                  <p class="text-gray-700 text-base mb-4"><%= blog.rating_point %> / 5</p>
+                  <form action="/blogs/<%= blog._id %>/update-rating" method="POST">
+                    <input type="hidden" name="blogId" value="<%= blog._id %>">
+                    <label for="rating">Rate this blog:</label>
+                    <input type="number" name="rating" min="0" max="5" required class="border border-gray-300 rounded-lg p-2 mb-2">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit Rating</button>
+                  </form>
+                </div>
 
-						<div class="blog-tags">
-							<strong>Tags:</strong>
-							<div class="flex flex-wrap mt-2">
-								<% blog.tags.forEach(tag => { %>
-								<span class="bg-blue-500 text-white text-xs font-medium rounded-full px-3 py-1 mr-2 mb-2">
-									<%= tag %>
-								</span>
-								<% }) %>
-							</div>
-						</div>
+                <!-- Add a Comment -->
+                <div class="mt-4">
+                  <form action="/blogs/<%= blog._id %>/comments" method="POST">
+                    <textarea name="text" rows="3" class="w-full border border-gray-300 rounded-lg p-2 mb-2" placeholder="Write your comment..." required></textarea>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit Comment</button>
+                  </form>
+                </div>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <p class="text-center text-gray-500">No blog posts available.</p>
+          <% } %>
 
-						<!-- Comment Section -->
-						<div class="mt-6">
-							<h3 class="text-lg font-semibold text-gray-800 mb-2">Comments:</h3>
-							<% if (blog.comments && blog.comments.length > 0) { %>
-							<% blog.comments.forEach(comment => { %>
-                    <div class="border-b border-gray-200 pb-2 mb-2">
-								<p class="text-sm text-gray-600">
-									<%= comment.text %>
-								</p>
-								<p class="text-xs text-gray-400">
-									Posted on <%= comment.createdAt.toDateString() %>
-								</p>
-							</div>
-							<% }) %>
-                <% } else { %>
-                  <p class="text-gray-500">No comments yet. Be the first to comment!</p>
-							<% } %>
-						</div>
+          <div class="text-center mt-8">
+            <a href="/blogs/create" class="inline-block bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">Create a New Blog Post</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
-						<!-- Rating Section -->
-						<!-- Rating Section -->
-<div class="mt-4">
-	<strong>Rating:</strong>
-	<p class="text-gray-700 text-base mb-4">
-	  <%= blog.rating_point %> / 5
-	</p>
-	<form action="/blogs/<%= blog._id %>/update-rating" method="POST">
-	  <input type="hidden" name="blogId" value="<%= blog._id %>">
-	  <label for="rating">Rate this blog:</label>
-	  <input type="number" name="rating" min="0" max="5" required class="border border-gray-300 rounded-lg p-2 mb-2">
-	  <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit Rating</button>
-	</form>
-  </div>
-						<!-- Add a Comment -->
-						<div class="mt-4">
-							<form action="/blogs/"
-								<%= blog._id %>/comments" method="POST">
-								<textarea name="text" rows="3" class="w-full border border-gray-300 rounded-lg p-2 mb-2" placeholder="Write your comment..." required=""></textarea>
-								<button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-									Submit Comment
-								</button>
-							</form>
-						</div>
-					</div>
-					<% }) %>
-        <% } else { %>
-          <p class="text-center text-gray-500">No blog posts available.</p>
-					<% } %>
-
-        <div class="text-center mt-8">
-						<a href="/blogs/create" class="inline-block bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600">Create a New Blog Post</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</body>
+  <!-- Footer -->
+  <footer class="bg-white shadow mt-8">
+    <div class="container mx-auto p-6 text-center">
+      <p class="text-gray-600">&copy; 2025 CSBangla. All rights reserved.</p>
+      <nav class="space-x-4">
+        <a href="/about" class="text-gray-700 hover:text-blue-500">About Us</a>
+        <a href="/contact" class="text-gray-700 hover:text-blue-500">Contact</a>
+        <a href="/privacy" class="text-gray-700 hover:text-blue-500">Privacy Policy</a>
+      </nav>
+    </div>
+  </footer>
+</body>
 </html>

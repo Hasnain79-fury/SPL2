@@ -15,7 +15,7 @@ router.get('/create', authMiddleware, showCreateBlogForm);
 router.post('/', authMiddleware, createBlog);
 
 // Route to display all blog posts
-router.get('/show', getAllBlogs);// Add this route before the route to fetch a specific blog by ID
+router.get('/show',authMiddleware, getAllBlogs);// Add this route before the route to fetch a specific blog by ID
 router.get('/search', searchBlogsByTitle);
 
 

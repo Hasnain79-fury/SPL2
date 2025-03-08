@@ -3,7 +3,8 @@ const RegisteredUser = require('../models/RegisteredUser');
 
 // Show the form to create a new blog post
 exports.showCreateBlogForm = (req, res) => {
-  res.render('pages/create-blog');
+  const user = req.user || null;
+  res.render('pages/create-blog', {  user });
 };
 
 // Handle blog post creation
@@ -57,8 +58,9 @@ exports.getAllBlogs = async (req, res) => {
         path: 'comments',
         populate: { path: 'author', select: '_id username' }, // Populate comment author details
       });
+      const user = req.user || null;
 
-    res.render('pages/blogs', { blogs });
+    res.render('pages/blogs', { blogs, user });
   } catch (error) {
     console.error('Error fetching blogs:', error);
     res.status(500).send('Server error while fetching blogs.');
@@ -95,8 +97,8 @@ exports.searchBlogsByTitle = async (req, res) => {
         path: 'comments',
         populate: { path: 'author', select: '_id username' },
       });
-
-    res.render('pages/blogs', { blogs });
+      const user = req.user || null; 
+    res.render('pages/blogs', { blogs, user });
   } catch (error) {
     console.error('Error searching blogs:', error);
     res.status(500).send('Server error while searching blogs.');
